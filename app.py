@@ -161,7 +161,6 @@ def shop():
         products = db.search_gear(DB_NAME, search_query)
     else:
         products = db.get_all_gear(DB_NAME)
-        print(products)
         
 
     if request.method == 'POST':
@@ -261,9 +260,10 @@ def payment_success():
 
         gear_name = gear[2]
         price_per_day = gear[4]
+        seller_id = gear[1]
 
         # You can add start_date and end_date logic here later
-        db.insert_rental(DB_NAME, user['id'], gear_id, gear_name, price_per_day)
+        db.insert_rental(DB_NAME, user['id'],seller_id,  gear_id, gear_name, price_per_day)
 
         # Mark gear as unavailable
         db.update_gear_availability(DB_NAME, gear_id, False)
