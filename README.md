@@ -1,0 +1,2 @@
+# TrickOrTrip
+hackathon app
