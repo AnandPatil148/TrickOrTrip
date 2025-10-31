@@ -1,0 +1,55 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="max-w-6xl mx-auto px-4 py-8">
+  <h2 class="text-orange-400 text-3xl font-bold mb-8 text-center">My Gear</h2>
+
+  {% if products %}
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+      {% for p in products %}
+        <div class="bg-gray-800/60 backdrop-blur-lg rounded-xl p-5 border border-orange-500/20 shadow-lg hover:shadow-orange-500/20 hover:-translate-y-1 transition transform duration-300">
+          <div class="flex justify-between items-start mb-3">
+            <h3 class="text-xl font-semibold text-orange-400">{{ p[2] }}</h3>
+            <span class="text-sm px-2 py-1 rounded-full {% if p[9] == 1 %}bg-green-900/50 text-green-400{% else %}bg-red-900/50 text-red-400{% endif %}">
+              {% if p[9] == 1 %}Available 👻{% else %}Rented Out 💀{% endif %}
+            </span>
+          </div>
+          
+          <div class="space-y-2 text-gray-300">
+            <p><span class="text-orange-300">Category:</span> {{ p[3] }}</p>
+            <p><span class="text-orange-300">Price:</span> ₹{{ p[4] }} <span class="text-gray-500 text-sm">/day</span></p>
+            <p><span class="text-orange-300">Deposit:</span> ₹{{ p[5] }}</p>
+            <p><span class="text-orange-300">In Stock:</span> {{ p[6] }} units</p>
+            {% if p[7] %}
+              <p class="mt-3 text-gray-400 italic text-sm">"{{ p[7] }}"</p>
+            {% endif %}
+          </div>
+
+          <div class="mt-4 pt-3 border-t border-orange-500/20 flex justify-between items-center">
+            <span class="text-sm text-gray-400">
+              {% if p[9] == 1 %}
+                <span class="text-green-400">🟢 Ready to rent</span>
+              {% else %}
+                <span class="text-red-400">🔴 Currently rented</span>
+              {% endif %}
+            </span>
+            <a href="/edit_products/{{ p[0] }}" class="text-orange-400 hover:text-orange-300 text-sm font-medium">
+              Edit ✏️
+            </a>
+          </div>
+        </div>
+      {% endfor %}
+    </div>
+  {% else %}
+    <div class="text-center py-12">
+      <p class="text-gray-400 text-lg mb-6">You haven't uploaded any spooky gear yet... 👻</p>
+      <p class="text-gray-500 text-sm">Your scary items are waiting to be listed!</p>
+    </div>
+  {% endif %}
+
+  <div class="text-center mt-10">
+    <a href="/upload" class="inline-flex items-center gap-2 bg-orange-600 hover:bg-orange-700 text-white font-medium px-6 py-3 rounded-lg transition-all duration-200 transform hover:scale-105">
+      🎃 Upload New Spooky Gear
+    </a>
+  </div>
+</div>
+{% endblock %}

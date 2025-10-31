@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+{% block content %}
+<h2 class="text-2xl font-bold mb-4 text-center">Welcome to your dashboard, {{ user.username }}</h2>
+<!-- <h1 class="text-lg font-semibold mb-2 halloween-text">You are logged in as a {{ user.role }}</h1> -->
+
+{% if user.role == 'seller' %}
+  <button type="button" onclick="location.href='/upload'" class="bg-orange-500 hover:bg-orange-600 text-white font-bold py-2 px-4 rounded">Upload Product</button>
+  <button type="button" onclick="location.href='/my_products'" class="bg-orange-500 hover:bg-orange-600 text-white font-bold py-2 px-4 rounded">See Your Products</button>
+{% else %}
+  <button type="button" onclick="location.href='/shop'" class="bg-orange-500 hover:bg-orange-600 text-white font-bold py-2 px-4 rounded">Shop Products</button>
+  <button type="button" onclick="location.href='/cart'" class="bg-orange-500 hover:bg-orange-600 text-white font-bold py-2 px-4 rounded">View Cart</button>
+{% endif %}
+<button type="button" onclick="location.href='/logout'" class="bg-orange-500 hover:bg-orange-600 text-white font-bold py-2 px-4 rounded">Logout</button>
+{% endblock %}
+

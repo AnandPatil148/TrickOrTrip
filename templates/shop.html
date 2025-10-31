@@ -1,0 +1,33 @@
+{% extends "base.html" %}
+{% block content %}
+<h2 class="text-3xl font-bold mb-8 text-center text-orange-400 halloween-text">Shop Products</h2>
+<div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 px-4">
+  {% for p in products %}
+  <div class="bg-orange-100 shadow-md rounded-lg p-4 border border-orange-200 hover:shadow-lg hover:shadow-orange-500/20 transition-shadow duration-300 h-full flex flex-col">
+    <form method="POST" class="space-y-4 flex flex-col h-full">
+      <div class="flex items-center justify-between">
+        <img src="" alt="{{ p[2] }}" class="w-32 h-32 object-cover mr-4 rounded-lg border border-orange-200">
+        <div class="flex-1">
+          <p class="font-semibold text-lg text-gray-900">{{ p[2] }} - Rs.{{ p[4] }}</p>
+          <p class="text-gray-800">Type: {{ p[3] }}</p>
+          <p class="text-sm text-gray-700">By {{ p[10] }}</p>
+        </div>
+        <input type="hidden" name="pid" value="{{ p[0] }}">
+      </div>
+      <button class="mt-auto w-full bg-orange-500 text-white p-2 rounded-lg hover:bg-orange-600 transition-all duration-200 shadow-md hover:shadow-orange-500/30 transform hover:-translate-y-1">
+        Add to Cart
+      </button>
+    </form>
+  </div>
+
+  {% endfor %}
+</div>
+<div class="text-center mt-8 space-y-4">
+  <a href="/cart" class="inline-block bg-orange-500 hover:bg-orange-600 text-white font-medium py-2 px-6 rounded-lg transition-colors duration-200 shadow-md hover:shadow-orange-500/30">
+    View Cart
+  </a>
+  <a href="/dashboard" class="block mt-4 text-orange-300 hover:text-orange-200 transition-colors duration-200">
+    ← Back to Dashboard
+  </a>
+</div>
+{% endblock %}

@@ -1,0 +1,119 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="max-w-md mx-auto mt-16 p-8 bg-gray-900/80 backdrop-blur-sm rounded-2xl border border-orange-500/30 shadow-lg">
+    <h2 class="text-3xl font-bold mb-6 text-center text-orange-400 font-creepster">🎃 Create Account</h2>
+    
+    <form method="POST" class="flex flex-col gap-4" id="signupForm">
+        <div>
+            <input name="username" placeholder="Full Name" 
+                   class="w-full px-4 py-3 bg-gray-800/70 border border-gray-600 rounded-lg text-white 
+                          focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-transparent
+                          placeholder-gray-400 transition duration-200">
+        </div>
+        <div>
+            <input name="phone" placeholder="Phone Number" maxlength="10"
+                   class="w-full px-4 py-3 bg-gray-800/70 border border-gray-600 rounded-lg text-white 
+                          focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-transparent
+                          placeholder-gray-400 transition duration-200">
+        </div>
+        <div>
+            <input name="email" placeholder="Email" type="email"
+                   class="w-full px-4 py-3 bg-gray-800/70 border border-gray-600 rounded-lg text-white 
+                          focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-transparent
+                          placeholder-gray-400 transition duration-200">
+        </div>
+        <div>
+            <input name="aadhar" placeholder="Aadhar Number"
+                   class="w-full px-4 py-3 bg-gray-800/70 border border-gray-600 rounded-lg text-white 
+                          focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-transparent
+                          placeholder-gray-400 transition duration-200">
+        </div>
+        <div>
+            <input name="password" placeholder="Password" type="password"
+                   class="w-full px-4 py-3 bg-gray-800/70 border border-gray-600 rounded-lg text-white 
+                          focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-transparent
+                          placeholder-gray-400 transition duration-200">
+        </div>
+
+        <div class="flex justify-around my-2 p-3 bg-gray-800/50 rounded-lg">
+            <label class="flex items-center gap-2 text-gray-300">
+                <input type="radio" name="role" value="customer" onclick="toggleSellerFields(false)" 
+                       class="text-orange-500 focus:ring-orange-500">
+                Customer
+            </label>
+            <label class="flex items-center gap-2 text-gray-300">
+                <input type="radio" name="role" value="seller" onclick="toggleSellerFields(true)"
+                       class="text-orange-500 focus:ring-orange-500">
+                Seller
+            </label>
+        </div>
+
+        <!-- Seller-only fields -->
+        <div id="sellerFields" class="hidden space-y-3 bg-gray-800/30 p-4 rounded-lg border border-orange-500/20">
+            <div>
+                <label class="block text-sm font-medium text-orange-300 mb-1">City</label>
+                <select name="city" id="citySelect" 
+                        class="w-full px-4 py-3 bg-gray-800/70 border border-gray-600 rounded-lg text-white 
+                               focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-transparent">
+                    <option value="">Select City</option>
+                    <option value="Bangalore">Bangalore</option>
+                    <option value="Hyderabad">Hyderabad</option>
+                    <option value="Mumbai">Mumbai</option>
+                    <option value="Delhi">Delhi</option>
+                </select>
+            </div>
+            <div>
+                <label class="block text-sm font-medium text-orange-300 mb-1">Area</label>
+                <select name="area" id="areaSelect" 
+                        class="w-full px-4 py-3 bg-gray-800/70 border border-gray-600 rounded-lg text-white 
+                               focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-transparent">
+                    <option value="">Select Area</option>
+                </select>
+            </div>
+        </div>
+
+        <button type="submit" 
+                class="w-full bg-gradient-to-r from-orange-600 to-orange-700 text-white font-bold py-3 px-4 rounded-lg
+                       hover:from-orange-500 hover:to-orange-600 transition duration-200 transform hover:scale-[1.02]
+                       shadow-lg shadow-orange-900/30 mt-4">
+            🎃 Sign Up
+        </button>
+
+        <p class="text-center mt-4 text-gray-300">
+            Already have an account? 
+            <a href="/login" class="text-orange-400 hover:text-orange-300 font-medium hover:underline transition duration-200">
+                Login here
+            </a>
+        </p>
+    </form>
+</div>
+
+<script>
+function toggleSellerFields(isSeller) {
+    document.getElementById('sellerFields').classList.toggle('hidden', !isSeller);
+}
+
+document.getElementById("citySelect").addEventListener("change", function() {
+    const areaSelect = document.getElementById("areaSelect");
+    const selectedCity = this.value;
+    areaSelect.innerHTML = '<option value="">Select Area</option>';
+    
+    if (selectedCity) {
+        // Add sample areas based on city
+        const areas = {
+            'Bangalore': ['Koramangala', 'Indiranagar', 'Whitefield', 'MG Road'],
+            'Hyderabad': ['Gachibowli', 'Jubilee Hills', 'Hitech City', 'Banjara Hills'],
+            'Mumbai': ['Bandra', 'Andheri', 'Dadar', 'Colaba'],
+            'Delhi': ['Connaught Place', 'Karol Bagh', 'Saket', 'Rohini']
+        };
+        
+        areas[selectedCity].forEach(area => {
+            const option = document.createElement('option');
+            option.value = area;
+            option.textContent = area;
+            areaSelect.appendChild(option);
+        });
+    }
+});
+</script>
+{% endblock %}

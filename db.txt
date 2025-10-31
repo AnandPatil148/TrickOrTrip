@@ -1,0 +1,81 @@
+seller (
+    seller_id INTEGER PRIMARY KEY,
+    name TEXT,
+    phone TEXT,
+    email TEXT,
+    id_proof TEXT,
+    city TEXT,
+    constituency TEXT,
+    password TEXT,
+    rating REAL DEFAULT 0,
+    total_rentals INTEGER DEFAULT 0
+)
+
+
+gear_items (
+    gear_id INTEGER PRIMARY KEY,
+    seller_id INTEGER,
+    gear_name TEXT,
+    category TEXT,
+    price_per_day REAL,
+    security_deposit REAL,
+    quantity INTEGER,
+    description TEXT,
+    image_path TEXT,
+    is_available INTEGER DEFAULT 1,
+    FOREIGN KEY (seller_id) REFERENCES seller(seller_id)
+)
+
+customer (
+    customer_id INTEGER PRIMARY KEY,
+    name TEXT,
+    phone TEXT,
+    email TEXT,
+    id_proof TEXT,
+    password TEXT,
+    safety_deposit_balance REAL DEFAULT 0,
+    platform_fee_rate REAL DEFAULT 0.04,
+    active_rentals INTEGER DEFAULT 0
+)
+
+cart (
+    entry_id INTEGER PRIMARY KEY,
+    customer_id INTEGER,
+    gear_id INTEGER,
+    quantity INTEGER,
+    added_date TEXT,
+    FOREIGN KEY (customer_id) REFERENCES customer(customer_id),
+    FOREIGN KEY (gear_id) REFERENCES gear_items(gear_id)
+)
+
+rentals (
+    rental_id INTEGER PRIMARY KEY,
+    customer_id INTEGER,
+    seller_id INTEGER,
+    gear_id INTEGER,
+    start_date TEXT,
+    end_date TEXT,
+    total_cost REAL,
+    status TEXT DEFAULT 'booked',    -- booked / active / returned / cancelled
+    deposit_collected REAL,
+    platform_fee REAL,
+    returned_on TEXT,
+    FOREIGN KEY (customer_id) REFERENCES customer(customer_id),
+    FOREIGN KEY (seller_id) REFERENCES seller(seller_id),
+    FOREIGN KEY (gear_id) REFERENCES gear_items(gear_id)
+)
+
+transactions (
+    tx_id INTEGER PRIMARY KEY,
+    rental_id INTEGER,
+    customer_id INTEGER,
+    seller_id INTEGER,
+    deposit_paid REAL,
+    platform_fee REAL,
+    amount_collected REAL,
+    tx_type TEXT,   -- deposit / rental_fee / refund / damage_charge
+    tx_timestamp TEXT,
+    FOREIGN KEY (rental_id) REFERENCES rentals(rental_id)
+)
+
+
